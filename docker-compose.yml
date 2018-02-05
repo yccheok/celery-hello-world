@@ -16,7 +16,16 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - rabbitmq
-
+      
+  insider_transaction_beat:
+    build:
+      context: ./insider_transaction
+      dockerfile: Dockerfile
+    entrypoint: celery
+    command:  -A insider_transaction beat --config=celeryconfig
+    depends_on:
+      - rabbitmq
+      
   earning:
     build:
       context: ./earning

@@ -17,7 +17,7 @@ task_routes = {
 beat_schedule = {
     'run_every_minute': {
         'task': 'insider_transaction.run',
-        'schedule': crontab(),
+        'schedule': 10.0,
         'options': {'queue': 'insider_transaction'},
     },
 }

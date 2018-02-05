@@ -15,4 +15,4 @@ WORKDIR /insider_transaction
 
 
 # To start the celery beat service:
-ENTRYPOINT celery -A insider_transaction beat --config=celeryconfig --loglevel=info
+ENTRYPOINT celery -A insider_transaction worker -Q insider_transaction --config=celeryconfig

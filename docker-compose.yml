@@ -1,6 +1,6 @@
 version: '2'
 services:
-  web:
+  flask:
     build:
       context: ./flask
       dockerfile: Dockerfile
@@ -14,6 +14,7 @@ services:
     build:
       context: ./insider_transaction
       dockerfile: Dockerfile
+    restart: always
     depends_on:
       - rabbitmq
       
@@ -21,15 +22,17 @@ services:
     build:
       context: ./insider_transaction
       dockerfile: Dockerfile
-    entrypoint: celery
-    command:  -A insider_transaction beat --config=celeryconfig
+    restart: always
     depends_on:
       - rabbitmq
+    entrypoint: celery
+    command:  -A insider_transaction beat --config=celeryconfig
       
   earning:
     build:
       context: ./earning
       dockerfile: Dockerfile
+    restart: always
     depends_on:
       - rabbitmq
       
@@ -37,6 +40,7 @@ services:
     build:
       context: ./stock_price
       dockerfile: Dockerfile
+    restart: always
     depends_on:
       - rabbitmq
       
@@ -44,6 +48,7 @@ services:
     build:
       context: ./earning
       dockerfile: Dockerfile
+    restart: always
     ports:
      - "5555:5555"
     entrypoint: celery
@@ -54,8 +59,16 @@ services:
   rabbitmq:
     hostname: rabbitmq
     image: rabbitmq:latest
+    restart: always
     environment:
         - RABBITMQ_DEFAULT_USER=admin
         - RABBITMQ_DEFAULT_PASS=mypass
     ports:
       - "5672:5672"
+
+  postgres:
+    hostname: postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"

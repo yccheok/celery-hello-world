@@ -58,8 +58,8 @@ I don't expect such to happen. In my web server side code (Flask). I wrote
                     broker=CELERY_BROKER_URL,
                     backend=CELERY_RESULT_BACKEND)
                     
-    @app.route('/add/<int:param1>/<int:param2>')
-    def add(param1,param2):
+    @app.route('/do_work/<int:param1>/<int:param2>')
+    def do_work(param1,param2):
         task0 = celery0.send_task('earning.add', args=[param1, param2], kwargs={})
 
         task1 = celery1.send_task('stock_price.mul', args=[param1, param2], kwargs={})
@@ -67,3 +67,10 @@ I don't expect such to happen. In my web server side code (Flask). I wrote
 Hence, I expect `earning` worker will only receive `earning` message, not `stock_price` message.
 
 May I know, why this problem occur? Is it not possible for different instance of Celery sharing single broker?
+
+A project which demonstrates this problem can be checkout from https://github.com/yccheok/celery-hello-world
+
+    docker-compose build
+    docker-compose up -d
+    http://localhost:5000/do_work/2/3
+    docker-compose up earning

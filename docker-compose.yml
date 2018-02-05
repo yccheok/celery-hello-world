@@ -1,0 +1,52 @@
+version: '2'
+services:
+  web:
+    build:
+      context: ./flask
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+     - "5000:5000"
+    depends_on:
+      - rabbitmq
+
+  insider_transaction:
+    build:
+      context: ./insider_transaction
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+
+  earning:
+    build:
+      context: ./earning
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+      
+  stock_price:
+    build:
+      context: ./stock_price
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+      
+  flower:
+    build:
+      context: ./earning
+      dockerfile: Dockerfile
+    ports:
+     - "5555:5555"
+    entrypoint: celery
+    command: flower -A earning --port=5555 --broker=amqp://admin:mypass@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq:latest
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"

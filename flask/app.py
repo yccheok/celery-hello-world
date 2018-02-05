@@ -19,8 +19,8 @@ celery1 = Celery('stock_price',
                 broker=CELERY_BROKER_URL,
                 backend=CELERY_RESULT_BACKEND)
                 
-@app.route('/add/<int:param1>/<int:param2>')
-def add(param1,param2):
+@app.route('/do_work/<int:param1>/<int:param2>')
+def do_work(param1,param2):
     task0 = celery0.send_task('earning.add', args=[param1, param2], kwargs={})
     task1 = celery1.send_task('stock_price.mul', args=[param1, param2], kwargs={})
     

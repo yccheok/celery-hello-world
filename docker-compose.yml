@@ -67,8 +67,9 @@ services:
       - "5672:5672"
 
   postgres:
-    hostname: postgres
-    image: postgres:latest
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     restart: always
     ports:
       - "5432:5432"

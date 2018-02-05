@@ -21,8 +21,8 @@ celery1 = Celery('stock_price',
                 
 @app.route('/do_work/<int:param1>/<int:param2>')
 def do_work(param1,param2):
-    task0 = celery0.send_task('earning.add', args=[param1, param2], kwargs={})
-    task1 = celery1.send_task('stock_price.mul', args=[param1, param2], kwargs={})
+    task0 = celery0.send_task('earning.add', queue='earning', args=[param1, param2], kwargs={})
+    task1 = celery1.send_task('stock_price.mul', queue='stock_price', args=[param1, param2], kwargs={})
     
     return "<a href='{url0}'>check status of {id0} </a> <br/> <a href='{url1}'>check status of {id1} </a>".format(id0=task0.id,
                 url0=url_for('check_task',id=task0.id,_external=True),id1=task1.id,

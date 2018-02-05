@@ -15,4 +15,4 @@ WORKDIR /earning
 
 
 # To start the celery beat service:
-ENTRYPOINT celery -A earning worker --config=celeryconfig --loglevel=info
+ENTRYPOINT celery -A earning worker -Q earning --config=celeryconfig --loglevel=info

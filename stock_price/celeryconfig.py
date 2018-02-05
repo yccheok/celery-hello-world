@@ -7,3 +7,7 @@ imports = ('stock_price',)
 ## Using the database to store task state and results.
 result_backend = 'rpc://'
 result_persistent = True
+
+task_routes = {
+    'stock_price.mul': {'queue' : 'stock_price'},
+}

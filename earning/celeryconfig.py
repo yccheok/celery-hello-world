@@ -7,3 +7,7 @@ imports = ('earning',)
 ## Using the database to store task state and results.
 result_backend = 'rpc://'
 result_persistent = True
+
+task_routes = {
+    'earning.add': {'queue' : 'earning'},
+}

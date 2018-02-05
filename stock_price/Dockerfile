@@ -15,4 +15,4 @@ WORKDIR /stock_price
 
 
 # To start the celery beat service:
-ENTRYPOINT celery -A stock_price worker --config=celeryconfig --loglevel=info
+ENTRYPOINT celery -A stock_price -Q stock_price worker --config=celeryconfig --loglevel=info

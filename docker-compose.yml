@@ -46,13 +46,11 @@ services:
       
   flower:
     build:
-      context: ./earning
+      context: ./flower
       dockerfile: Dockerfile
     restart: always
     ports:
      - "5555:5555"
-    entrypoint: celery
-    command: flower -A earning --port=5555 --broker=amqp://admin:mypass@rabbitmq:5672
     depends_on:
       - rabbitmq
 

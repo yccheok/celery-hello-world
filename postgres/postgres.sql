@@ -1,4 +1,7 @@
-CREATE TABLE my_table (
-    client_id character varying(36) NOT NULL,
-    value character varying(255)
+CREATE TABLE error_log (
+  timestamp timestamp with time zone default current_timestamp,
+  error text,
+  message text,
+  filename text,
+  line_number integer
 );

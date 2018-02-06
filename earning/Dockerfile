@@ -1,8 +1,13 @@
 FROM python:alpine
 
 
+RUN apk update && \
+    apk add --virtual build-deps gcc python-dev musl-dev && \
+    apk add postgresql-dev
+    
+
 # Install the required packages
-RUN pip install celery flower
+RUN pip install celery flower psycopg2
 
 
 ENV CELERY_BROKER_URL amqp://admin:mypass@rabbitmq:5672

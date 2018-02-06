@@ -30,6 +30,7 @@ def add(self, x, y):
         except MaxRetriesExceededError as me:
             logging.error(me, exc_info=True)
             insert_into_error_log(error, message, filename, line_number)
+            raise e
 
             
 def insert_into_error_log(error, message, filename, line_number):

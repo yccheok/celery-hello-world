@@ -5,12 +5,13 @@ from celery import Celery
 from celery.result import AsyncResult
 import celery.states as states
 
-env=os.environ
+
+CELERY_BROKER_URL = 'amqp://admin:mypass@rabbitmq:5672'
+CELERY_RESULT_BACKEND = 'rpc://'
+
+
 app = Flask(__name__)
 
-
-CELERY_BROKER_URL=env.get('CELERY_BROKER_URL','amqp://admin:mypass@rabbitmq:5672'),
-CELERY_RESULT_BACKEND=env.get('CELERY_RESULT_BACKEND','amqp')
 
 celery0 = Celery('earning',
                 broker=CELERY_BROKER_URL,

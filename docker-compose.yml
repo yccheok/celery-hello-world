@@ -5,11 +5,11 @@ services:
       context: ./flask
       dockerfile: Dockerfile
     restart: always
-    ports:
-     - "5000:5000"
     depends_on:
       - rabbitmq
-
+    ports:
+     - "80:80"
+     
   insider_transaction:
     build:
       context: ./insider_transaction
@@ -49,11 +49,11 @@ services:
       context: ./flower
       dockerfile: Dockerfile
     restart: always
-    ports:
-     - "5555:5555"
     depends_on:
       - rabbitmq
-
+    ports:
+     - "5555:5555"
+     
   rabbitmq:
     hostname: rabbitmq
     image: rabbitmq:latest
